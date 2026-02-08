@@ -1,5 +1,18 @@
-credentials.json
-client_secrets.json
-database.db
+# Python
 __pycache__/
+*.pyc
+
+# Secrets
+client_secrets.json
+credentials.json
+token.pickle
+
+# Database
+database.db
+
+# Env
 .env
+
+# Uploads
+static/uploads/
+
