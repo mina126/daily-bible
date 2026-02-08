@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.25)
+        ),
+        url("../static/imged/backgrounds/bg_\ \(10\).jpeg");
+
+        
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background-image 1.5s ease-in-out;
+}
+
+.card {
+    width: 320px;
+    padding: 30px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    color: #fff;
+}
+
+
+.logo img {
+    width: 120px;
+    height: 120px;
+    border-radius: 80%;
+    margin-bottom: 80px;
+    
+    /* لجعل الشعار شفافاً (درجة الشفافية 0.7 من 1) */
+    opacity: 0.9; 
+
+    /* التمركز الصحيح لكل الشاشات */
+    position: fixed;
+    top: 20px;     /* مسافة ثابتة من الأعلى */
+    right: 20px;    /* مسافة ثابتة من اليسار بدلاً من 1200px */
+    
+    /* لضمان عدم وجود خلفية خلف الصورة */
+    background-color: transparent; 
+    
+    /* لضمان عدم تغطية العناصر الأخرى له أو العكس */
+    z-index: 1500;
+}
+
+
+.avatar img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.5);
+    margin-bottom: 15px;
+}
+
+
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    background: white;
+    color: #3b6ddf;
+    font-weight: bold;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.box {
+    width: 80px;
+    padding: 12px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.25);
+}
+
+.box h3 {
+    margin: 0;
+}
+
+.box span {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+
+
+
+
+
+.today-reading {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+.today-reading h4 {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.today-reading p {
+    margin: 5px 0 0;
+    font-size: 16px;
+    font-weight: bold;
+}

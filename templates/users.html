@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f6f8;
+        }
+
+        table {
+            margin: 40px auto;
+            border-collapse: collapse;
+            width: 70%;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #3b6ddf;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .gold { background: gold; }
+        .silver { background: silver; }
+        .bronze { background: #cd7f32; color: white; }
+    </style>
+</head>
+<body>
+
+<h2>🏆 Leaderboard</h2>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>الاسم</th>
+        <th>🔥 Streak</th>
+        <th>⭐ Total</th>
+        <th>📅 Last Date</th>
+    </tr>
+
+    {% for user in users %}
+    <tr class="{% if loop.index == 1 %}gold{% elif loop.index == 2 %}silver{% elif loop.index == 3 %}bronze{% endif %}">
+        <td>{{ loop.index }}</td>
+        <td>{{ user[0] }}</td>
+        <td>{{ user[2] }}</td>
+        <td>{{ user[1] }}</td>
+        <td>{{ user[3] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

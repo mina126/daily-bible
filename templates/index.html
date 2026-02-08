@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Bible 📖</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script>
+window.addEventListener("load", function () {
+
+    const images = [
+        {% for img in images %}
+        "{{ url_for('static', filename=img) }}",
+        {% endfor %}
+    ];
+    let index = 0;
+
+    function changeBackground() {
+        document.body.style.backgroundImage = "url('" + images[index] + "')";
+        index = (index + 1) % images.length;
+    }
+
+    if (images.length > 0) {
+        changeBackground();
+        setInterval(changeBackground, 5000);
+    }
+});
+</script>
+
+
+</head>
+
+<body>
+
+    <div class = "logo"> 
+        <img src="/static/imged/LIFT.jpeg" alt="logo">
+    </div>
+
+
+<div class="card">
+
+    <div class="avatar">
+        <img src="/static/imged/logo.jpeg" alt="avatar">
+    </div>
+
+
+
+    <h2>Daily Bible</h2>
+    <p class="subtitle">Read • Pray • Grow ✝️</p>
+
+    <div class="today-reading">
+        <h4>📖 قراءة النهارده</h4>
+        <p>{{ reading }}</p>
+    </div>
+
+
+    <!-- الفورم كله هنا -->
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="اكتب اسمك" required>
+        
+        <input type="file" name="photo" accept="image/*" required>
+
+        <button type="submit">تأكيد القراءة 📖</button>
+    </form>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    {% if name %}
+    <div class="stats">
+        <div class="box">
+            <h3>{{ streak }}</h3>
+            <span>🔥 Streak</span>
+        </div>
+        <div class="box">
+            <h3>{{ total }}</h3>
+            <span>📅 Total</span>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
