@@ -1,4 +1,4 @@
-* {
+/* * {
     box-sizing: border-box;
     font-family: "Segoe UI", sans-serif;
 }
@@ -13,8 +13,7 @@ body {
         linear-gradient(
             rgba(0, 0, 0, 0.25),
             rgba(0, 0, 0, 0.25)
-        ),
-        url("../static/imged/backgrounds/bg_\ \(10\).jpeg");
+        )
 
         
 
@@ -47,18 +46,17 @@ body {
     border-radius: 80%;
     margin-bottom: 80px;
     
-    /* لجعل الشعار شفافاً (درجة الشفافية 0.7 من 1) */
+ 
     opacity: 0.9; 
 
-    /* التمركز الصحيح لكل الشاشات */
     position: fixed;
-    top: 20px;     /* مسافة ثابتة من الأعلى */
-    right: 20px;    /* مسافة ثابتة من اليسار بدلاً من 1200px */
+    top: 20px;     
+    right: 20px;    
     
-    /* لضمان عدم وجود خلفية خلف الصورة */
+
     background-color: transparent; 
     
-    /* لضمان عدم تغطية العناصر الأخرى له أو العكس */
+ 
     z-index: 1500;
 }
 
@@ -145,4 +143,177 @@ button {
     margin: 5px 0 0;
     font-size: 16px;
     font-weight: bold;
+} */
+
+
+
+
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
+
+/* Body */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.25)
+        );
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: background-image 1.5s ease-in-out;
+}
+
+/* Card */
+.card {
+    width: 320px;
+    padding: 30px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    color: #fff;
+}
+
+/* Logo */
+.logo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    background-color: transparent;
+}
+
+/* Avatar */
+.avatar img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.5);
+    margin-bottom: 15px;
+}
+
+/* Subtitle */
+.subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    background: white;
+    color: #3b6ddf;
+    font-weight: bold;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.box {
+    flex: 1;
+    padding: 12px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.25);
+}
+
+.box h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.box span {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* Today Reading */
+.today-reading {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+.today-reading h4 {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.today-reading p {
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ===================== */
+/* 📱 Mobile Responsive */
+/* ===================== */
+@media (max-width: 480px) {
+
+    .card {
+        width: 90%;
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .logo img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .avatar img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    .today-reading p {
+        font-size: 14px;
+    }
+}
+
+
+
+
+
+
