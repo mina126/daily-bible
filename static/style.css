@@ -1,8 +1,12 @@
+/* Reset */
 * {
     box-sizing: border-box;
-    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* Body */
 body {
     min-height: 100vh;
     display: flex;
@@ -14,21 +18,15 @@ body {
             rgba(0, 0, 0, 0.25),
             rgba(0, 0, 0, 0.25)
         ),
-        url("../static/imged/backgrounds/bg_\ \(10\).jpeg");
-
-        
-
+    url("/static/imged/backgrounds/bg1.jpeg"); /* دي هتتغير بالجافاسكريبت */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
     transition: background-image 1.5s ease-in-out;
 }
 
+/* Card */
 .card {
     width: 320px;
     padding: 30px;
@@ -40,29 +38,25 @@ body {
     color: #fff;
 }
 
-
+/* Logo */
 .logo img {
-    width: 120px;
-    height: 120px;
-    border-radius: 80%;
-    margin-bottom: 80px;
-    
-    /* لجعل الشعار شفافاً (درجة الشفافية 0.7 من 1) */
-    opacity: 0.9; 
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    opacity: 0.95;
 
-    /* التمركز الصحيح لكل الشاشات */
     position: fixed;
-    top: 20px;     /* مسافة ثابتة من الأعلى */
-    right: 20px;    /* مسافة ثابتة من اليسار بدلاً من 1200px */
-    
-    /* لضمان عدم وجود خلفية خلف الصورة */
-    background-color: transparent; 
-    
-    /* لضمان عدم تغطية العناصر الأخرى له أو العكس */
-    z-index: 1500;
+    top: 15px;
+    right: 15px;
+
+    background: transparent;
+    box-shadow: none;
+
+    z-index: 9999;
 }
 
 
+/* Avatar */
 .avatar img {
     width: 90px;
     height: 90px;
@@ -71,14 +65,14 @@ body {
     margin-bottom: 15px;
 }
 
-
-
+/* Subtitle */
 .subtitle {
     font-size: 14px;
     opacity: 0.9;
     margin-bottom: 20px;
 }
 
+/* Inputs */
 input {
     width: 100%;
     padding: 12px;
@@ -86,8 +80,10 @@ input {
     border: none;
     outline: none;
     margin-bottom: 15px;
+    font-size: 14px;
 }
 
+/* Button */
 button {
     width: 100%;
     padding: 12px;
@@ -100,14 +96,16 @@ button {
     font-weight: bold;
 }
 
+/* Stats */
 .stats {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    gap: 10px;
 }
 
 .box {
-    width: 80px;
+    flex: 1;
     padding: 12px;
     border-radius: 15px;
     background: rgba(255,255,255,0.25);
@@ -115,6 +113,7 @@ button {
 
 .box h3 {
     margin: 0;
+    font-size: 18px;
 }
 
 .box span {
@@ -122,11 +121,7 @@ button {
     opacity: 0.9;
 }
 
-
-
-
-
-
+/* Today Reading */
 .today-reading {
     margin-bottom: 20px;
     padding: 15px;
@@ -136,13 +131,117 @@ button {
 }
 
 .today-reading h4 {
-    margin: 0;
     font-size: 14px;
     opacity: 0.9;
 }
 
 .today-reading p {
-    margin: 5px 0 0;
+    margin-top: 5px;
     font-size: 16px;
     font-weight: bold;
 }
+
+/* ===================== */
+/* 📱 Mobile Responsive */
+/* ===================== */
+@media (max-width: 480px) {
+
+    .card {
+        width: 90%;
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .logo img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .avatar img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    .today-reading p {
+        font-size: 14px;
+    }
+}
+@media (max-width: 480px) {
+    .logo img {
+        width: 55px;
+        height: 55px;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+.admin-btn {
+    position: fixed;
+    top: 25px;
+    right: 95px; /* جنب اللوجو */
+    z-index: 10000;
+}
+
+.admin-btn a {
+    color: white;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    transition: 0.3s;
+}
+
+.admin-btn a:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.actions {
+    width: 100%;
+    padding: 12px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    background: white;
+    color: #3b6ddf;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+.community {
+    margin-top: 500px;
+    text-align: center;
+    color: #fff;
+}
+
+.leader, .followers {
+    margin: 20px auto;
+    padding: 12px 20px;
+    width: 7007%;
+    max-width: 320px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    font-size: 14px;
+}
+
+.leader strong,
+.followers strong {
+    display: block;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+
+

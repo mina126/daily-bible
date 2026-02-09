@@ -295,15 +295,19 @@
 
 
 ####################################################################
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from datetime import date, timedelta
 import cloudinary
 import cloudinary.uploader
 import uuid
-import os 
+import os
 
-# ---------------- Bible Plan ----------------
+# ==================================================
+# 📖 Bible Reading Plan
+# ==================================================
+
+# قائمة القراءة اليومية
 BIBLE_PLAN = []
 
 books = {
@@ -314,25 +318,42 @@ books = {
     "أعمال الرسل": 28
 }
 
+# توليد الخطة كاملة (كتاب + إصحاح)
 for book, chapters in books.items():
     for ch in range(1, chapters + 1):
         BIBLE_PLAN.append(f"{book} - الإصحاح {ch}")
 
-START_DATE = date(2026, 2, 9)  # غيرها لأول يوم قراءة############################################
+# تاريخ بداية البرنامج
+START_DATE = date(2026, 2, 9)
 
-# ---------------- Cloudinary ----------------
+# ==================================================
+# ☁️ Cloudinary Config
+# ==================================================
+
 cloudinary.config(
     cloud_name="dpwxa2wzk",
     api_key="578539276511726",
     api_secret="rQCb8Gh0u0GIsMUcj6iwlO6KBwQ"
 )
 
-app = Flask(__name__)
+# ==================================================
+# 🚀 Flask App
+# ==================================================
 
-# ---------------- Database ----------------
+app = Flask(__name__)
+app.secret_key = "daily-bible-secret"  # مهم للـ session
+
+ADMIN_PASSWORD = "اشبال اتنين"  # غيره براحتك
+
+# ==================================================
+# 🗄 Database
+# ==================================================
 
 
 def init_db():
+    """
+    إنشاء قاعدة البيانات لو مش موجودة
+    """
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("""
@@ -351,58 +372,68 @@ def init_db():
 
 init_db()
 
-# ---------------- Routes ----------------
+# ==================================================
+# 🏠 Home Page
+# ==================================================
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """
+    الصفحة الرئيسية
+    - تعرض قراءة اليوم
+    - تسجيل المستخدم بالصورة
+    - حساب streak و total
+    """
     message = None
-
-    # 📖 تحديد قراءة اليوم
     today = date.today()
     day_index = (today - START_DATE).days
 
+    # تحديد قراءة اليوم
     if day_index < 0:
         reading = "البرنامج لم يبدأ بعد"
     elif day_index >= len(BIBLE_PLAN):
         reading = "🎉 خلصنا إنجيل وأعمال الرسل"
     else:
         reading = BIBLE_PLAN[day_index]
-    
-    # 🖼 تحميل صور الخلفية تلقائي
-    background_folder = os.path.join(app.static_folder, "imged/backgrounds")
-    image_files = []
 
+    # تحميل صور الخلفية تلقائي
+    background_folder = os.path.join(app.static_folder, "imged/backgrounds")
+    images = []
     if os.path.exists(background_folder):
-        image_files = [
-            f"imged/backgrounds/{file}"
-            for file in os.listdir(background_folder)
-            if file.lower().endswith((".png", ".jpg", ".jpeg", ".webp"))
+        images = [
+            f"imged/backgrounds/{img}"
+            for img in os.listdir(background_folder)
+            if img.lower().endswith((".jpg", ".jpeg", ".png", ".webp"))
         ]
+
+    # تسجيل قراءة المستخدم
     if request.method == "POST":
         name = request.form.get("name")
         photo = request.files.get("photo")
 
         if not name or not photo or photo.filename == "":
-            return render_template("index.html",
-                                   message="❌ لازم الاسم والصورة",
-                                   reading=reading)
+            return render_template(
+                "index.html",
+                message="❌ لازم الاسم والصورة",
+                reading=reading,
+                images=images
+            )
 
-        # 🔥 Upload to Cloudinary
-        upload_result = cloudinary.uploader.upload(
+        # رفع الصورة على Cloudinary
+        upload = cloudinary.uploader.upload(
             photo,
             folder="daily_bible",
-            public_id=f"{name}_{uuid.uuid4()}",
-            overwrite=True
+            public_id=f"{name}_{uuid.uuid4()}"
         )
 
-        image_url = upload_result["secure_url"]
-
+        image_url = upload["secure_url"]
         today_str = str(today)
 
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
 
+        # هل المستخدم مسجل قبل كده؟
         c.execute(
             "SELECT total_days, streak, last_date FROM users WHERE name=?",
             (name,)
@@ -411,7 +442,6 @@ def index():
 
         if user:
             total, streak, last = user
-
             if last != today_str:
                 yesterday = str(today - timedelta(days=1))
                 streak = streak + 1 if last == yesterday else 1
@@ -430,17 +460,67 @@ def index():
 
         conn.commit()
         conn.close()
-
         message = "✅ الصورة اترفعت واتسجل اليوم بنجاح"
 
-    return render_template("index.html",
-                           message=message,
-                           reading=reading,
-                           images=image_files)
+    # إحصائيات
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+
+    c.execute("""
+        SELECT name, streak FROM users
+        ORDER BY streak DESC
+        LIMIT 1
+    """)
+    top_user = c.fetchone()
+
+    c.execute("SELECT COUNT(*) FROM users")
+    total_users = c.fetchone()[0]
+
+    conn.close()
+
+    return render_template(
+        "index.html",
+        message=message,
+        reading=reading,
+        images=images,
+        top_user=top_user,
+        total_users=total_users
+    )
+
+# ==================================================
+# 🔐 Admin Login
+# ==================================================
 
 
-@app.route("/users")
-def users():
+@app.route("/admin-login", methods=["GET", "POST"])
+def admin_login():
+    """
+    صفحة تسجيل دخول الأدمن
+    """
+    if request.method == "POST":
+        if request.form.get("password") == ADMIN_PASSWORD:
+            session["admin"] = True
+            return redirect(url_for("admin_dashboard"))
+
+        return render_template("admin_login.html", error="❌ كلمة السر غلط")
+
+    return render_template("admin_login.html")
+
+# ==================================================
+# 📊 Admin Dashboard
+# ==================================================
+
+
+@app.route("/admin-dashboard")
+def admin_dashboard():
+    """
+    لوحة تحكم الأدمن
+    - عرض المستخدمين
+    - ترتيب حسب streak
+    """
+    if not session.get("admin"):
+        return redirect(url_for("admin_login"))
+
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("""
@@ -450,9 +530,26 @@ def users():
     """)
     users = c.fetchall()
     conn.close()
+
     return render_template("users.html", users=users)
 
+# ==================================================
+# 🚪 Logout
+# ==================================================
 
-# ---------------- Run ----------------
+
+@app.route("/admin-logout")
+def admin_logout():
+    """
+    تسجيل خروج الأدمن
+    """
+    session.pop("admin", None)
+    return redirect(url_for("index"))
+
+# ==================================================
+# ▶ Run App
+# ==================================================
+
+
 if __name__ == "__main__":
     app.run(debug=True)

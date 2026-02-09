@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <title>Daily Bible 📖</title>
@@ -7,12 +7,12 @@
 
 <script>
 window.addEventListener("load", function () {
-
     const images = [
         {% for img in images %}
         "{{ url_for('static', filename=img) }}",
         {% endfor %}
     ];
+
     let index = 0;
 
     function changeBackground() {
@@ -22,28 +22,28 @@ window.addEventListener("load", function () {
 
     if (images.length > 0) {
         changeBackground();
-        setInterval(changeBackground, 5000);
+        setInterval(changeBackground, 6000);
     }
 });
 </script>
-
-
 </head>
 
 <body>
 
-    <div class = "logo"> 
-        <img src="/static/imged/LIFT.jpeg" alt="logo">
-    </div>
+<!-- 🔝 اللوجو + الأدمن -->
+<div class="logo">
+    <img src="/static/imged/LIFT.jpeg" alt="logo">
+</div>
+<div class="admin-btn">
+    <a href="/admin-login">Admin</a>
+</div>
 
-
+<!-- 🧊 الكارت الأساسي -->
 <div class="card">
 
     <div class="avatar">
         <img src="/static/imged/logo.jpeg" alt="avatar">
     </div>
-
-
 
     <h2>Daily Bible</h2>
     <p class="subtitle">Read • Pray • Grow ✝️</p>
@@ -53,13 +53,9 @@ window.addEventListener("load", function () {
         <p>{{ reading }}</p>
     </div>
 
-
-    <!-- الفورم كله هنا -->
     <form method="POST" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="اكتب اسمك" required>
-        
         <input type="file" name="photo" accept="image/*" required>
-
         <button type="submit">تأكيد القراءة 📖</button>
     </form>
 
@@ -67,20 +63,20 @@ window.addEventListener("load", function () {
         <p>{{ message }}</p>
     {% endif %}
 
-    {% if name %}
-    <div class="stats">
-        <div class="box">
-            <h3>{{ streak }}</h3>
-            <span>🔥 Streak</span>
-        </div>
-        <div class="box">
-            <h3>{{ total }}</h3>
-            <span>📅 Total</span>
-        </div>
-    </div>
-    {% endif %}
-
 </div>
 
+<!-- 🏆 الإحصائيات تحت الكارت -->
+<div class="bottom-stats">
+    <div class="mini-box leader">
+        🥇 الأعلى اليوم<br>
+        <strong>{{ top_user[0] if top_user else "—" }}</strong>
+        <span>{{ top_user[1] if top_user else 0 }} أيام</span>
+    </div>
+
+    <div class="mini-box followers">
+        👥 عدد المشتركين<br>
+        <strong>{{ total_users }}</strong>
+    </div>
+</div>
 </body>
 </html>

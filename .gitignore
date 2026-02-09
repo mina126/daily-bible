@@ -6,6 +6,7 @@ __pycache__/
 client_secrets.json
 credentials.json
 token.pickle
+gg.txt
 
 # Database
 database.db
