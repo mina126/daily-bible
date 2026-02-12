@@ -50,7 +50,10 @@ ADMIN_PASSWORD = "اشبال اتنين"
 # ==================================================
 
 def get_db():
-    return psycopg2.connect(os.environ.get("DATABASE_URL"))
+    db_url = os.environ.get("DATABASE_URL")
+    if not db_url:
+        raise Exception("DATABASE_URL is missing")
+    return psycopg2.connect(db_url)
 
 def init_db():
     conn = get_db()
