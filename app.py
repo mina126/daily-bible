@@ -73,7 +73,10 @@ def init_db():
 
 # 🔒 الحل هنا (تشغيل مرة واحدة فقط)
 if os.environ.get("INIT_DB") == "true":
+try:
     init_db()
+except Exception as e:
+    print("DB INIT ERROR:", e)
 
 # ==================================================
 # 🏠 Home
