@@ -71,13 +71,12 @@ def init_db():
     conn.commit()
     conn.close()
 
-# 🔒 الحل هنا (تشغيل مرة واحدة فقط)
+# 🔒 الحل هنا (تشغيل مرة واحدة 
 if os.environ.get("INIT_DB") == "true":
-try:
-    init_db()
-except Exception as e:
-    print("DB INIT ERROR:", e)
-
+    try:
+        init_db()
+    except Exception as e:
+        print("DB INIT ERROR:", e)
 # ==================================================
 # 🏠 Home
 # ==================================================
