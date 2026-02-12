@@ -68,7 +68,9 @@ def init_db():
     conn.commit()
     conn.close()
 
-init_db()
+# 🔒 الحل هنا (تشغيل مرة واحدة فقط)
+if os.environ.get("INIT_DB") == "true":
+    init_db()
 
 # ==================================================
 # 🏠 Home
