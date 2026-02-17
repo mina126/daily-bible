@@ -56,8 +56,7 @@ def get_db():
     return psycopg2.connect(os.environ["DATABASE_URL"])
 def get_db():
     return psycopg2.connect(
-        os.environ.get("DATABASE_URL"),
-        sslmode="require"
+        os.environ.get("DATABASE_URL")
     )
 
 
