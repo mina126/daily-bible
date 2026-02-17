@@ -53,7 +53,7 @@ def get_db():
     db_url = os.environ.get("DATABASE_URL")
     if not db_url:
         raise Exception("DATABASE_URL is missing")
-    return psycopg2.connect(db_url)
+    return psycopg2.connect(os.environ["DATABASE_URL"])
 def get_db():
     return psycopg2.connect(
         os.environ.get("DATABASE_URL"),
