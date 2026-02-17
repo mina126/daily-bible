@@ -24,7 +24,7 @@ for book, chapters in books.items():
     for ch in range(1, chapters + 1):
         BIBLE_PLAN.append(f"{book} - الإصحاح {ch}")
 
-START_DATE = date(2026, 2, 9)
+START_DATE = date(2026, 2, 17)
 
 # ==================================================
 # ☁️ Cloudinary
@@ -43,7 +43,7 @@ cloudinary.config(
 app = Flask(__name__)
 app.secret_key = "daily-bible-secret"
 
-ADMIN_PASSWORD = "اشبال اتنين"
+ADMIN_PASSWORD = "123456789"
 
 # ==================================================
 # 🗄 Database
