@@ -243,7 +243,7 @@ button {
     margin-top: 10px;
 }
 
-/* 🔥 Fix stats position under the card */
+/* /* 🔥 Fix stats position under the card */
 body {
     flex-direction: column;
 }
@@ -256,6 +256,6 @@ body {
 .followers {
     width: 320px !important;
     max-width: 90%;
-}
+} */
 
 
